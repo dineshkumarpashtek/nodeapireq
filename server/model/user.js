@@ -5,7 +5,8 @@ function User(){
     this.email = "";
     this.name= ""; 
     this.accountid= ""; 
-}
+}        
+
 User.findOne = function(email, callback){
 
 	var isNotAvailable = false; //we are assuming the email is taking
