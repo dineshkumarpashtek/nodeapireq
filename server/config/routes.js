@@ -20,7 +20,7 @@ module.exports = function(app,db,pgp) {
     app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
-       
+         
   	app.get('/api/student/:sId', function(req, res) {
 			var studId = req.params.sId;    
 	    	console.log("orderId : " + studId);
@@ -51,6 +51,8 @@ module.exports = function(app,db,pgp) {
 						     console.log("Created record id : " + ret.id);
 						   // ...
 						 });    
+
+					res.render('index.ejs');      
 
      				/*
 					var stud = new Student__c();
@@ -103,31 +105,36 @@ module.exports = function(app,db,pgp) {
 		
         var sId = req.params.sId;
         console.log('sId+'+sId);    
-    
-		db.query("SELECT * FROM Student__c WHERE id ='"+sId+"'", true)
+              
+		db.query("SELECT * FROM salesforce.student WHERE s_id ='"+sId+"'", true)
 	    .then(function (data) {
 			console.log('data+'+data);
 			var order = data;
-			    
-			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
+			     
+			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err) {
 			  if (err) { return res.status(500).json({ success: false,err:err}); }
 			  // Now you can get the access token and instance URL information.
 			  // Save them to establish connection next time.
 			  console.log(conn.accessToken);
 			  console.log(conn.instanceUrl);
-			  // logged in user property
-			  console.log("User ID: " + userInfo.id);
-			  console.log("Org ID: " + userInfo.organizationId);
+			
 			  // Single record creation
 			  console.log("Order Id",order); 
 			  
-				conn.sobject("Student__c").create(order, function(err, ret) {
-				if (err || !ret.success) { return res.status(500).json({ success: false,err:err,ret:ret}); }
-					console.log("Created record id : " + ret.id);
-				});
+				// Single record creation
+				conn.sobject("Student__c").create({
+					DateTaken__c: 'sfnewcheckst_d',
+					ExamResult__c: 'Pending - New Hire',
+					MinutesTaken__c: '012F00000lvIAC'
+					}, function(err, ret) {
+					  if (err || !ret.success) { return console.error(err, ret); }
+					     console.log("Created record id : " + ret.id);
+					   // ...
+					 });    
+
+				res.render('index.ejs');     
 			});
-			
-			
+
 	        return res.json(data);
 	    })
 	    .catch(function (err) {
