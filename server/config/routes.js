@@ -102,11 +102,11 @@ module.exports = function(app,db,pgp) {
 
 
    	app.get('/api/studentid/:sId', function(req, res) {
-		  
+		      
         var sId = req.params.sId;
         console.log('sId+'+sId);    
-                  
-		db.query("SELECT * FROM student WHERE s_id ='"+sId+"'", true)
+                  //WHERE s_id ="+sId+"::int"
+		db.query("SELECT * FROM student", true)
 	    .then(function (data) {
 			console.log('data+'+data);
 			var order = data;
