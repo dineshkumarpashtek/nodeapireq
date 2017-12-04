@@ -26,8 +26,8 @@ module.exports = function(app,db,pgp) {
 		
         var sId = req.params.sId;
         console.log('sId+'+sId);    
-
-		db.query("SELECT * FROM salesforce.student WHERE id ='"+sId+"'", true)
+    
+		db.query("SELECT * FROM salesforce.Student__c WHERE id ='"+sId+"'", true)
 	    .then(function (data) {
 			console.log('data+'+data);
 			var order = data;
@@ -57,7 +57,7 @@ module.exports = function(app,db,pgp) {
 	        console.log("ERROR:", err); // print the error;
 	        return res.status(500).json({ success: false,error : err});
 	    })
-	    .finally(function () {
+	    .finally(function (){
 	        // If we do not close the connection pool when exiting the application,
 	        // it may take 30 seconds (poolIdleTimeout) before the process terminates,
 	        // waiting for the connection to expire in the pool.
@@ -67,8 +67,6 @@ module.exports = function(app,db,pgp) {
 	        // See also:
 	        // https://github.com/vitaly-t/pg-promise#library-de-initialization
 	    });
-
-       
   	});
     
 	app.post('/api/studentpost', function(req, res) {
