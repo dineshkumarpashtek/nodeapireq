@@ -20,9 +20,9 @@ module.exports = function(app,db,pgp) {
     app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
-    
-  	app.get('/api/studentid/:sId', function(req, res) {
-			var studId = req.params.sId;  
+       
+  	app.get('/api/student/:sId', function(req, res) {
+			var studId = req.params.sId;    
 	    	console.log("orderId : " + studId);
 			
 			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
