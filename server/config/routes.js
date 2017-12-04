@@ -22,25 +22,25 @@ module.exports = function(app,db,pgp) {
     });
     
   	app.get('/api/studentid/:sId', function(req, res) {
-			var orderId = req.params.sId;  
-	    	console.log("orderId : " + orderId);
-			var loginUser = req.user;
+			var studId = req.params.sId;  
+	    	console.log("orderId : " + studId);
+			
 			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
-				  if (err) {  return res.redirect('/orders'); }
+				  
 				  // Now you can get the access token and instance URL information.
 				var records = [];
-				conn.query("SELECT DateTaken__c,ExamResult__c,MinutesTaken__c,Id,Name FROM Student__c WHERE Id='"+orderId+"' LIMIT 1", function(err, result) {
+				conn.query("SELECT DateTaken__c,ExamResult__c,MinutesTaken__c,Id,Name FROM Student__c WHERE Id='"+studId+"' LIMIT 1", function(err, result) {
 				if (err) { return res.status(500).json({ success: false,error : err}); }
 					console.log("total : " + result.totalSize);
 					console.log("fetched : " , result.records);
 					console.log("done ? : "+ result.done);
-					records = result.records[0];
+					records = result.records[0];    
 					if (!result.done) {
 					// you can use the locator to fetch next records set.
 					// Connection#queryMore()  
 					console.log("next records URL : " + records);
 					}
-					
+					  
 				});
 			});
 		
