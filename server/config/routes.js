@@ -10,6 +10,8 @@ var conn = new jsforce.Connection({
     redirectUri: process.env.Callback_URL,
   }
 });
+
+
 //all the routes for our application
 module.exports = function(app,db,pgp) {
     // =====================================
@@ -23,15 +25,13 @@ module.exports = function(app,db,pgp) {
 	app.get('/api/studentid/:sId', function(req, res) {
 		
         var sId = req.params.sId;
-        console.log('sId+'+sId);
+        console.log('sId+'+sId);    
 
-        var results = [];
-        console.log(loginUser);
 		db.query("SELECT * FROM salesforce.student WHERE id ='"+sId+"'", true)
 	    .then(function (data) {
 			console.log('data+'+data);
 			var order = data;
-			
+			    
 			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
 			  if (err) { return res.status(500).json({ success: false,err:err}); }
 			  // Now you can get the access token and instance URL information.
@@ -42,7 +42,7 @@ module.exports = function(app,db,pgp) {
 			  console.log("User ID: " + userInfo.id);
 			  console.log("Org ID: " + userInfo.organizationId);
 			  // Single record creation
-			  console.log("Order Id",order);
+			  console.log("Order Id",order); 
 			  
 				conn.sobject("Student__c").create(order, function(err, ret) {
 				if (err || !ret.success) { return res.status(500).json({ success: false,err:err,ret:ret}); }
