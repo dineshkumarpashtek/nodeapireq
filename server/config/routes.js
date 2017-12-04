@@ -40,14 +40,36 @@ module.exports = function(app,db,pgp) {
 					// Connection#queryMore()  
 					console.log("next records URL : " + records);
 					}
-					  
+     
+					var stud = new Student__c();
+				    stud.DateTaken__c= '2';
+				    stud.ExamResult__c = '2';
+				    stud.MinutesTaken__c = '3';
+				    stud.Name =  'vicky';
+					conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
+					  if (err) { return res.status(500).json({ success: false,err:err}); }
+					  // Now you can get the access token and instance URL information.
+					  // Save them to establish connection next time.
+					  console.log(conn.accessToken);
+					  console.log(conn.instanceUrl);
+					 
+					  // Single record creation   
+					  console.log("stud Dtls Id+"+stud);
+					    
+						conn.sobject("Student__c").create(stud, function(err, ret) {
+						if (err || !ret.success) { return res.status(500).json({ success: false,err:err,ret:ret}); }
+							console.log("Created record id : " + ret.id);
+						});
+					});
+
+
 				});
 			});
 		
 	});
    
 	app.post('/api/studentpost', function(req, res) {
-    	  
+    	     
         var stud = new Student__c();
 	    stud.DateTaken__c= '2';
 	    stud.ExamResult__c = '2';
