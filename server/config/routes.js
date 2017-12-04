@@ -24,7 +24,7 @@ module.exports = function(app,db,pgp) {
   	app.get('/api/student/:sId', function(req, res) {
 			var studId = req.params.sId;    
 	    	console.log("orderId : " + studId);
-			
+			  
 			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
 				  
 				  // Now you can get the access token and instance URL information.
@@ -46,7 +46,34 @@ module.exports = function(app,db,pgp) {
 		
 	});
    
-	app.get('/api/studentid/:sId', function(req, res) {
+	app.post('/api/studentpost', function(req, res) {
+    	  
+        var stud = new Student__c();
+	    stud.DateTaken__c= '2';
+	    stud.ExamResult__c = '2';
+	    stud.MinutesTaken__c = '3';
+	    stud.Name =  'vicky';
+		
+		conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
+		  if (err) { return res.status(500).json({ success: false,err:err}); }
+		  // Now you can get the access token and instance URL information.
+		  // Save them to establish connection next time.
+		  console.log(conn.accessToken);
+		  console.log(conn.instanceUrl);
+		 
+		  // Single record creation
+		  console.log("stud Dtls Id+"+stud);
+		    
+			conn.sobject("Student__c").create(stud, function(err, ret) {
+			if (err || !ret.success) { return res.status(500).json({ success: false,err:err,ret:ret}); }
+				console.log("Created record id : " + ret.id);
+			});
+		});
+        
+   	});
+
+
+   	app.get('/api/studentid/:sId', function(req, res) {
 		
         var sId = req.params.sId;
         console.log('sId+'+sId);    
@@ -92,35 +119,5 @@ module.exports = function(app,db,pgp) {
 	        // https://github.com/vitaly-t/pg-promise#library-de-initialization
 	    });
   	});
-    
-	app.post('/api/studentpost', function(req, res) {
-    	if(req.hasOwnProperty('user')){
-            var loginUser = req.user;
-            var results = [];
-            var data =req.body;
-			var order = data.order;
-			order.AccountId = loginUser.accountid;
-			
-			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
-			  if (err) { return res.status(500).json({ success: false,err:err}); }
-			  // Now you can get the access token and instance URL information.
-			  // Save them to establish connection next time.
-			  console.log(conn.accessToken);
-			  console.log(conn.instanceUrl);
-			  // logged in user property
-			  console.log("User ID: " + userInfo.id);
-			  console.log("Org ID: " + userInfo.organizationId);
-			  // Single record creation
-			  console.log("Order Id",order);
-			  
-				conn.sobject("Student__c").create(order, function(err, ret) {
-				if (err || !ret.success) { return res.status(500).json({ success: false,err:err,ret:ret}); }
-					console.log("Created record id : " + ret.id);
-				});
-			});
-        }else{
-            return res.status(500).json({ success: false});
-        }
-   	});
    
 };
