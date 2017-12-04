@@ -20,8 +20,10 @@ module.exports = function(app,db,pgp) {
     });
   
    
- app.get('/api/studentid/:sId', function(req, res) {
-         var sId = req.params.sId;
+	app.get('/api/studentid/:sId', function(req, res) {
+		console.log('req+'+req);
+		console.log('res+'+res);
+        var sId = req.params.sId;
         if(req.hasOwnProperty('user')){
         
             var loginUser = req.user;
@@ -73,7 +75,7 @@ module.exports = function(app,db,pgp) {
         }else{
             return res.status(500).json({ success: false});
         }
-  });
+  	});
     
 	app.post('/api/studentpost', function(req, res) {
     	if(req.hasOwnProperty('user')){
@@ -103,6 +105,6 @@ module.exports = function(app,db,pgp) {
         }else{
             return res.status(500).json({ success: false});
         }
-   });
+   	});
    
 };

@@ -3,7 +3,7 @@ var pgp = require('./pgpromise.js');
 // See also: https://github.com/vitaly-t/pg-promise#initialization-options
 
 // Database connection details;
-var cn = {
+var cn = {  
     host: 'ec2-54-225-151-64.compute-1.amazonaws.com', // 'localhost' is the default;
     port: 5432, // 5432 is the default;
     database: 'd24n3l2kj40397',
