@@ -103,13 +103,13 @@ module.exports = function(app,db,pgp) {
 
    	app.get('/api/studentid/:sId', function(req, res) {
 		      
-        var sId = req.params.sId;
+        var sId = req.params.sId;   
         console.log('sId+'+sId);    
                   //WHERE s_id ="+sId+"::int"
-		db.query("SELECT * FROM student", true)
+		db.query("SELECT * FROM student where s_id="+sId+"", true)
 	    .then(function (data) {
 			console.log('data+'+data);
-			var order = data;
+			var studentDtls = data;
 			     
 			conn.login(process.env.SF_Username, process.env.SF_PWD, function(err) {
 			  if (err) { return res.status(500).json({ success: false,err:err}); }
@@ -119,13 +119,14 @@ module.exports = function(app,db,pgp) {
 			  console.log(conn.instanceUrl);
 			
 			  // Single record creation
-			  console.log("Order Id",order); 
-			  
+			  console.log("Order Id",studentDtls[0]); 
+			      
 				// Single record creation
 				conn.sobject("Student__c").create({
-					DateTaken__c: 'sfnewcheckst_d',
-					ExamResult__c: 'Pending - New Hire',
-					MinutesTaken__c: '012F00000lvIAC'
+					Name : studentDtls[0].Name,  
+					DateTaken__c: studentDtls[0].DateTaken,
+					ExamResult__c: studentDtls[0].ExamResult,
+					MinutesTaken__c: studentDtls[0].MinutesTaken
 					}, function(err, ret) {
 					  if (err || !ret.success) { return console.error(err, ret); }
 					     console.log("Created record id : " + ret.id);
