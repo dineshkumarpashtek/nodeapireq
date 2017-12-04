@@ -104,7 +104,7 @@ module.exports = function(app,db,pgp) {
    	app.get('/api/studentid/:sId', function(req, res) {
 		      
         var sId = req.params.sId;   
-        console.log('sId+'+sId);    
+        console.log('sId+'+sId);      
                   //WHERE s_id ="+sId+"::int"
 		db.query("SELECT * FROM student where s_id="+sId+"", true)
 	    .then(function (data) {
@@ -122,11 +122,11 @@ module.exports = function(app,db,pgp) {
 			  console.log("Order Id",studentDtls[0]); 
 			      
 				// Single record creation
-				conn.sobject("Student__c").create({
-					Name : studentDtls[0].Name,  
-					DateTaken__c: studentDtls[0].DateTaken,
-					ExamResult__c: studentDtls[0].ExamResult,
-					MinutesTaken__c: studentDtls[0].MinutesTaken
+				conn.sobject("Student__c").create({         
+					Name : studentDtls[0].name,     
+					DateTaken__c: studentDtls[0].datetaken,
+					ExamResult__c: studentDtls[0].examresult,
+					MinutesTaken__c: studentDtls[0].minutestaken
 					}, function(err, ret) {
 					  if (err || !ret.success) { return console.error(err, ret); }
 					     console.log("Created record id : " + ret.id);
