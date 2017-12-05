@@ -73,8 +73,23 @@ module.exports = function(app,db,pgp) {
 
 			});
 		});
-
-	    //return res.json(data);
+			
+	    
+			
+      /*	
+      For Upsert
+      conn.sobject("Student__c").upsert({ 
+					Name : studentDtls[0].name,     
+					DateTaken__c: studentDtls[0].datetaken,
+					ExamResult__c: studentDtls[0].examresult,
+					MinutesTaken__c: studentDtls[0].minutestaken,
+					Student_Id__c: sId
+				}, 'Student_Id__c', function(err, ret) {
+				  if (err || !ret.success) { return console.error(err, ret); }
+				  console.log('Upserted Successfully');
+				  // ... 
+				}); */
+	    return res.json(data);
 
 	    })
 	    .catch(function (err) {
@@ -93,4 +108,6 @@ module.exports = function(app,db,pgp) {
 	    });
   	});
    
+	
+	
 };
