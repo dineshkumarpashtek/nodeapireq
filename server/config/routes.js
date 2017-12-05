@@ -120,7 +120,21 @@ module.exports = function(app,db,pgp) {
 			
 			  // Single record creation
 			  console.log("Order Id",studentDtls[0]); 
-			      
+
+			  	conn.sobject("Student__c").upsert({ 
+					Name : studentDtls[0].name,     
+					DateTaken__c: studentDtls[0].datetaken,
+					ExamResult__c: studentDtls[0].examresult,
+					MinutesTaken__c: studentDtls[0].minutestaken,
+					Student_Id__c: sId
+				}, 'Student_Id__c', function(err, ret) {
+				  if (err || !ret.success) { return console.error(err, ret); }
+				  console.log('Upserted Successfully');
+				  // ... 
+				});   
+			    
+
+			    /*
 				// Single record creation
 				conn.sobject("Student__c").create({         
 					Name : studentDtls[0].name,     
@@ -131,7 +145,7 @@ module.exports = function(app,db,pgp) {
 					  if (err || !ret.success) { return console.error(err, ret); }
 					     console.log("Created record id : " + ret.id);
 					   // ...
-					 });    
+					 });  */  
 
 				res.render('index.ejs');     
 			});
