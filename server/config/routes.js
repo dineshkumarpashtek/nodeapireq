@@ -134,9 +134,9 @@ module.exports = function(app,db,pgp) {
 						MinutesTaken__c: result.records[0].minutestaken__c
 						}, function(err, ret) {
 						  if (err || !ret.success) { return console.error(err, ret); }
-						     console.log("Created record id : " + ret.id);
+						     console.log("record Updated successfully : " + ret.id);
 						   // ...
-						 });    
+						 });        
 
 				}else{
 					// Single record creation
