@@ -132,7 +132,7 @@ module.exports = function(app,db,pgp) {
 				  console.log('Upserted Successfully');
 				  // ... 
 				});   
-			    
+			         
 
 			    /*
 				// Single record creation
