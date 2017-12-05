@@ -99,7 +99,7 @@ module.exports = function(app,db,pgp) {
 
 		});
 	});
-
+  
 
    	app.get('/api/studentid/:sId', function(req, res) {
 		      
@@ -109,21 +109,21 @@ module.exports = function(app,db,pgp) {
 		db.query("SELECT * FROM student where s_id="+sId+"", true)
 	    .then(function (data) {
 		console.log('data+'+data);
-		var studentDtls = data;
+		var studentDtls = data;  
 
 		conn.login(process.env.SF_Username, process.env.SF_PWD, function(err, userInfo) {
 			  if (err) {  return res.redirect('/orders'); }
 			  // Now you can get the access token and instance URL information.
-			var records = [];
-			conn.query("SELECT Id, FROM Student__c WHERE Student_Id__c ='"+sId+"' LIMIT 1", function(err, result) {
+			var records = [];  
+			conn.query("SELECT DateTaken__c,ExamResult__c,MinutesTaken__c,Id,Name FROM Student__c WHERE Student_Id__c='"+sId+"' LIMIT 1", function(err, result) {
 
 				if (err) { return res.status(500).json({ success: false,error : err}); }
 				console.log("total : " + result.totalSize);
 				console.log("fetched : " , result.records);
 				console.log("done ? : "+ result.done);
-     
+         
 				records = result.records[0];
-    
+    			/*
 				if (!result.done) {
 					// record updation
 					conn.sobject("Student__c").update({   
@@ -150,7 +150,7 @@ module.exports = function(app,db,pgp) {
 						     console.log("Created record id : " + ret.id);
 						   // ...
 						 });    	
-				}
+				}*/
 
 			});
 		});
