@@ -123,7 +123,7 @@ module.exports = function(app,db,pgp) {
 				console.log("done ? : "+ result.done);
          
 				records = result.records[0];
-    			/*
+    			
 				if (!result.done) {
 					// record updation
 					conn.sobject("Student__c").update({   
@@ -150,7 +150,7 @@ module.exports = function(app,db,pgp) {
 						     console.log("Created record id : " + ret.id);
 						   // ...
 						 });    	
-				}*/
+				}  
 
 			});
 		});
