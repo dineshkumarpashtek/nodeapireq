@@ -124,7 +124,7 @@ module.exports = function(app,db,pgp) {
          
 				records = result.records[0];
     			
-				if (!result.done) {
+				if (result.done) {      
 					// record updation
 					conn.sobject("Student__c").update({   
 						Id : result.records[0].Id,
