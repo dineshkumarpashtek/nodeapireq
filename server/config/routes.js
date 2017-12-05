@@ -123,8 +123,8 @@ module.exports = function(app,db,pgp) {
 				console.log("done ? : "+ result.done);
          
 				records = result.records[0];
-    			   
-				if (result.totalSize > 0) {      
+    			      
+				if (result.totalSize != 0) {      
 					// record updation
 					conn.sobject("Student__c").update({   
 						Id : result.records[0].Id,
