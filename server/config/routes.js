@@ -110,6 +110,16 @@ module.exports = function(app,db,pgp) {
 	    .then(function (data) {
 			console.log('data+'+data);
 			var studentDtls = data;
+
+		conn.login(process.env.SF_Username, process.env.SF_PWD, function(err) {
+			if (err) { return res.status(500).json({ success: false,err:err}); }
+			// Now you can get the access token and instance URL information.
+			// Save them to establish connection next time.
+			console.log(conn.accessToken);
+			console.log(conn.instanceUrl);
+
+			// Single record creation
+			console.log("Order Id",studentDtls[0]); 
 			     
 			var records = [];
 			conn.query("SELECT Id, FROM Student__c WHERE Student_Id__c ='"+sId+"' LIMIT 1", function(err, result) {
@@ -147,8 +157,10 @@ module.exports = function(app,db,pgp) {
 				}
 				// you can use the locator to fetch next records set.
 				// Connection#queryMore()
-				
+				  
 			});
+
+		});
 
 	        return res.json(data);
 	    })
