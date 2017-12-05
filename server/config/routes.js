@@ -119,12 +119,12 @@ module.exports = function(app,db,pgp) {
 
 				if (err) { return res.status(500).json({ success: false,error : err}); }
 				console.log("total : " + result.totalSize);
-				console.log("fetched : " , result.records);
+				console.log("fetched : " , result.records[0]);
 				console.log("done ? : "+ result.done);
          
 				records = result.records[0];
-    			
-				if (result.done) {      
+    			   
+				if (result.totalSize > 0) {      
 					// record updation
 					conn.sobject("Student__c").update({   
 						Id : result.records[0].Id,
