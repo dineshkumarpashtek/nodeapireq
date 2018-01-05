@@ -10,60 +10,57 @@
 </head>   
 <body>    
 
-<header class="slds-global-header_container"><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Main Content</a>
-  <div class="slds-global-header slds-grid slds-grid_align-spread">
-    <div class="slds-global-header__item slds-global-header__item_search">
-    </div>
-  </div>
-</header>
+
 
 <div class="slds-form slds-form_stacked">
+
+	<header class="slds-global-header_container"><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to Main Content</a>
+	  <div class="slds-global-header slds-grid slds-grid_align-spread">
+	    <div class="slds-global-header__item slds-global-header__item_search">
+	    </div>
+	  </div>
+	</header>
+
+
 	<div class="slds-form-element">
-		<label class="slds-form-element__label" for="input-id-01">Text Input</label>
+		<label class="slds-form-element__label" for="firstName">First Name</label>
 		<div class="slds-form-element__control">
-			<input type="text" id="input-id-01" class="slds-input" placeholder="Placeholder Text" />
+			<input type="text" id="firstName" class="slds-input" placeholder="First Name" />
 		</div>
 	</div>
 	<div class="slds-form-element">
-		<label class="slds-form-element__label" for="input-id-02">Textarea Label</label>
+		<label class="slds-form-element__label" for="lastName">Last Name</label>
 		<div class="slds-form-element__control">
-			<textarea id="input-id-02" class="slds-textarea" placeholder="Placeholder Text"></textarea>
+			<input type="text" id="lastName" class="slds-input" placeholder="Last Name" />
 		</div>
 	</div>
-	<fieldset class="slds-form-element">
-		<legend class="slds-form-element__legend slds-form-element__label">Checkbox Group label</legend>
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" for="email">Email</label>
 		<div class="slds-form-element__control">
-			<span class="slds-checkbox">
-				<input type="checkbox" name="default" id="checkbox-3" value="on" />
-				<label class="slds-checkbox__label" for="checkbox-3">
-				<span class="slds-checkbox_faux"></span>
-				<span class="slds-form-element__label">All opportunities owned by you</span>
-				</label>
-			</span>
-			<span class="slds-checkbox">
-				<input type="checkbox" name="default" id="checkbox-4" value="on" />
-				<label class="slds-checkbox__label" for="checkbox-4">
-				<span class="slds-checkbox_faux"></span>
-				<span class="slds-form-element__label">All contacts in the account owned by you</span>
-				</label>
-			</span>
+			<input type="text" id="email" class="slds-input" placeholder="email" />
 		</div>
-	</fieldset>
+	</div>
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" for="phone">Phone</label>
+		<div class="slds-form-element__control">
+			<input type="text" id="phone" class="slds-input" placeholder="Phone" />
+		</div>
+	</div>    
 	<fieldset class="slds-form-element">
 		<legend class="slds-form-element__legend slds-form-element__label">Checkbox Group label</legend>
 		<div class="slds-form-element__control">
 			<span class="slds-radio">
-				<input type="radio" id="radio-3" name="options" value="on" />
+				<input type="radio" id="male" name="options" value="on" />
 				<label class="slds-radio__label" for="radio-3">
-				<span class="slds-radio_faux"></span>
-				<span class="slds-form-element__label">Lead Generation</span>
+					<span class="slds-radio_faux"></span>
+					<span class="slds-form-element__label">Male</span>
 				</label>
 			</span>
 			<span class="slds-radio">
-				<input type="radio" id="radio-4" name="options" value="on" />
+				<input type="radio" id="female" name="options" value="on" />
 				<label class="slds-radio__label" for="radio-4">
-				<span class="slds-radio_faux"></span>
-				<span class="slds-form-element__label">Education Leads</span>
+					<span class="slds-radio_faux"></span>
+					<span class="slds-form-element__label">Female</span>
 				</label>
 			</span>
 		</div>    
