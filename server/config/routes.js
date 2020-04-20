@@ -25,7 +25,7 @@ module.exports = function(app,db,pgp) {
         var sId = req.params.sId;   
         console.log('sId+'+sId);      
                   //WHERE s_id ="+sId+"::int"
-		db.query("SELECT * FROM student where s_id="+sId+"", true)
+		db.query("SELECT * FROM lead where s_id="+sId+"", true)
 	    .then(function (data) {
 		console.log('data+'+data);
 		var studentDtls = data;  
@@ -34,7 +34,7 @@ module.exports = function(app,db,pgp) {
 			  if (err) {  return res.redirect('/orders'); }
 			  // Now you can get the access token and instance URL information.
 			var records = [];  
-			conn.query("SELECT DateTaken__c,ExamResult__c,MinutesTaken__c,Id,Name FROM Student__c WHERE Student_Id__c='"+sId+"' LIMIT 1", function(err, result) {
+			conn.query("SELECT Last Name,Company,Id,Name FROM lead WHERE Id='"+sId+"' LIMIT 1", function(err, result) {
 
 				if (err) { return res.status(500).json({ success: false,error : err}); }
 				console.log("total : " + result.totalSize);
