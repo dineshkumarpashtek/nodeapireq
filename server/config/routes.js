@@ -34,7 +34,7 @@ module.exports = function(app,db,pgp) {
 			  if (err) {  return res.redirect('/orders'); }
 			  // Now you can get the access token and instance URL information.
 			var records = [];  
-			conn.query("SELECT Last Name,Company,Id,Name FROM lead WHERE Id='"+sId+"' LIMIT 1", function(err, result) {
+			conn.query("SELECT LastName,Company,Id,Name FROM lead WHERE Id='"+sId+"' LIMIT 1", function(err, result) {
 
 				if (err) { return res.status(500).json({ success: false,error : err}); }
 				console.log("total : " + result.totalSize);
@@ -45,12 +45,11 @@ module.exports = function(app,db,pgp) {
     			      
 				if (result.totalSize != 0) {      
 					// record updation
-					conn.sobject("Student__c").update({   
+					conn.sobject("lead").update({   
 						Id : result.records[0].Id,
 						Name : result.records[0].name,     
-						DateTaken__c: result.records[0].datetaken__c,
-						ExamResult__c: result.records[0].examresult__c,
-						MinutesTaken__c: result.records[0].minutestaken__c
+						LastName: result.records[0].LastName,
+						Company: result.records[0].Company
 						}, function(err, ret) {
 						  if (err || !ret.success) { return console.error(err, ret); }
 						     console.log("record Updated successfully : " + ret.id);
@@ -59,11 +58,10 @@ module.exports = function(app,db,pgp) {
 
 				}else{
 					// Single record creation
-					conn.sobject("Student__c").create({         
+					conn.sobject("lead").create({         
 						Name : studentDtls[0].name,     
-						DateTaken__c: studentDtls[0].datetaken,
-						ExamResult__c: studentDtls[0].examresult,
-						MinutesTaken__c: studentDtls[0].minutestaken
+						LastName: studentDtls[0].LastName,
+						Company: studentDtls[0].Company
 						}, function(err, ret) {
 						  if (err || !ret.success) { return console.error(err, ret); }
 						     console.log("Created record id : " + ret.id);
