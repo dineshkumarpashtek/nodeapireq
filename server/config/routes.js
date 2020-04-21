@@ -22,16 +22,17 @@ module.exports = function (app, db, pgp) {
 
   app.get("/api/createlead/:sId", function (req, res) {
     var sId = req.params.sId;
-    //const { name, company } = req.body;
+    const { name, company } = req.body;
+
+    console.log("sId+" + sId);
+    console.log("name+" + name + ": company :" + company);
     //WHERE s_id ="+sId+"::int"
-
-    const format = require("pg-format");
-
-    let leads = JSON.parse(req.body);
-    let insertQuery = format(
-      "INSERT INTO users (name, company) VALUES %L returning id",
-      leads
-    );
+    var insertQuery =
+      "INSERT INTO lead (name, company) VALUES ('" +
+      name +
+      "','" +
+      company +
+      "')";
 
     db.query(insertQuery, true)
       .then(function (data) {
