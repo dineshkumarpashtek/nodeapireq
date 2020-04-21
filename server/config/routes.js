@@ -26,7 +26,7 @@ module.exports = function (app, db, pgp) {
     console.log("sId+" + sId);
     console.log("author+" + author + ": title :" + title);
     //WHERE s_id ="+sId+"::int"
-    db.query("SELECT * FROM lead where s_id=" + sId + "", true)
+    db.query("SELECT * FROM lead where id=" + sId + "", true)
       .then(function (data) {
         console.log("data+" + data);
         var studentDtls = data;
