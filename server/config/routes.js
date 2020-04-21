@@ -20,13 +20,8 @@ module.exports = function (app, db, pgp) {
     res.render("index.ejs"); // load the index.ejs file
   });
 
-  app.get("/api/createlead/:sId", function (req, res) {
-    var sId = req.params.sId;
+  app.get("/api/createlead", function (req, res) {
     const { name, company } = req.body;
-
-    console.log("sId+" + sId);
-    console.log("name+" + name + ": company :" + company);
-    //WHERE s_id ="+sId+"::int"
     var insertQuery =
       "INSERT INTO lead (name, company) VALUES ('" +
       name +
