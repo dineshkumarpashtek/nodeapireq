@@ -20,7 +20,7 @@ module.exports = function (app, db, pgp) {
     res.render("index.ejs"); // load the index.ejs file
   });
 
-  app.get("/api/createlead", function (req, res) {
+  app.post("/api/createlead", function (req, res) {
     const { name, company } = req.body;
     var insertQuery =
       "INSERT INTO lead (name, company) VALUES ('" +
