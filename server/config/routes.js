@@ -29,7 +29,7 @@ module.exports = function (app, db, pgp) {
 
     let leads = req.body;
     let insertQuery = format(
-      "INSERT INTO users (name, company) VALUES %L returning id",
+      "INSERT INTO lead (name, company) VALUES %L returning id",
       leads
     );
 
