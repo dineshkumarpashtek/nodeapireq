@@ -27,7 +27,10 @@ module.exports = function (app, db, pgp) {
 
     const format = require("pg-format");
 
-    let leads = req.body;
+    let leads = [
+      ["V", "Fred"],
+      ["V1", "Lynda"],
+    ];
     let insertQuery = format(
       "INSERT INTO lead (name, company) VALUES %L returning id",
       leads
