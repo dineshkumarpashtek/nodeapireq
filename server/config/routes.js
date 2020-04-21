@@ -27,10 +27,7 @@ module.exports = function (app, db, pgp) {
     console.log("sId+" + sId);
     console.log("name+" + name + ": company :" + company);
     //WHERE s_id ="+sId+"::int"
-    db.query(
-      "INSERT INTO student(name, company)VALUES('vicky1', 'company')",
-      true
-    )
+    db.query("INSERT INTO lead(name, company)VALUES('vicky1', 'company')", true)
       .then(function (data) {
         return res.json(data);
       })
