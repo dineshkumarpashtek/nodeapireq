@@ -21,7 +21,6 @@ module.exports = function (app, db, pgp) {
   });
 
   app.get("/api/createlead/:sId", function (req, res) {
-    debugger;
     var sId = req.params.sId;
     const { name, company } = req.body;
 
@@ -33,7 +32,6 @@ module.exports = function (app, db, pgp) {
       true
     )
       .then(function (data) {
-        console.log("data+" + data);
         return res.json(data);
       })
       .catch(function (err) {
