@@ -21,8 +21,10 @@ module.exports = function (app, db, pgp) {
   });
 
   app.get("/api/createlead/:sId", function (req, res) {
+    debugger;
     var sId = req.params.sId;
     const { author, title } = req.body;
+
     console.log("sId+" + sId);
     console.log("author+" + author + ": title :" + title);
     //WHERE s_id ="+sId+"::int"
