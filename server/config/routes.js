@@ -22,19 +22,12 @@ module.exports = function (app, db, pgp) {
 
   app.get("/api/createlead/:sId", function (req, res) {
     var sId = req.params.sId;
-    const { name, company } = req.body;
-
-    console.log("sId+" + sId);
-    console.log("name+" + name + ": company :" + company);
+    //const { name, company } = req.body;
     //WHERE s_id ="+sId+"::int"
-    var insertQuery =
-      "INSERT INTO lead (name, company) VALUES ('" +
-      name +
-      "','" +
-      company +
-      "')";
 
-    db.query(insertQuery, true)
+    var insertQuery = "INSERT INTO Users(name, company) VALUES $1";
+
+    db.query(insertQuery, Inserts("${name}, ${company}", req.body), true)
       .then(function (data) {
         return res.json(data);
       })
