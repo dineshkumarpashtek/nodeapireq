@@ -20,9 +20,11 @@ module.exports = function (app, db, pgp) {
     res.render("index.ejs"); // load the index.ejs file
   });
 
-  app.get("/api/studentid/:sId", function (req, res) {
+  app.get("/api/createlead/:sId", function (req, res) {
     var sId = req.params.sId;
+    const { author, title } = req.body;
     console.log("sId+" + sId);
+    console.log("author+" + author + ": title :" + title);
     //WHERE s_id ="+sId+"::int"
     db.query("SELECT * FROM lead where s_id=" + sId + "", true)
       .then(function (data) {
@@ -90,19 +92,6 @@ module.exports = function (app, db, pgp) {
           );
         });
 
-        /*	
-      For Upsert
-      conn.sobject("Student__c").upsert({ 
-					Name : studentDtls[0].name,     
-					DateTaken__c: studentDtls[0].datetaken,
-					ExamResult__c: studentDtls[0].examresult,
-					MinutesTaken__c: studentDtls[0].minutestaken,
-					Student_Id__c: sId
-				}, 'Student_Id__c', function(err, ret) {
-				  if (err || !ret.success) { return console.error(err, ret); }
-				  console.log('Upserted Successfully');
-				  // ... 
-				}); */
         return res.json(data);
       })
       .catch(function (err) {
@@ -110,14 +99,7 @@ module.exports = function (app, db, pgp) {
         return res.status(500).json({ success: false, error: err });
       })
       .finally(function () {
-        // If we do not close the connection pool when exiting the application,
-        // it may take 30 seconds (poolIdleTimeout) before the process terminates,
-        // waiting for the connection to expire in the pool.
-
-        // But if you normally just kill the process, then it doesn't matter.
         pgp.end(); // for immediate app exit, closing the connection pool.
-        // See also:
-        // https://github.com/vitaly-t/pg-promise#library-de-initialization
       });
   });
 };
