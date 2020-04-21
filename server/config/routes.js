@@ -20,15 +20,21 @@ module.exports = function (app, db, pgp) {
     res.render("index.ejs"); // load the index.ejs file
   });
 
-  app.get("/api/createlead", function (req, res) {
+  app.get("/api/createlead/:sId", function (req, res) {
     var sId = req.params.sId;
-    const items = req.body;
+    const { name, company } = req.body;
 
-    db.query(
-      "INSERT INTO lead (name, company) VALUES ?",
-      [items.map((item) => [item.name, item.company])],
-      true
-    )
+    console.log("sId+" + sId);
+    console.log("name+" + name + ": company :" + company);
+    //WHERE s_id ="+sId+"::int"
+    var insertQuery =
+      "INSERT INTO lead (name, company) VALUES ('" +
+      name +
+      "','" +
+      company +
+      "')";
+
+    db.query(insertQuery, true)
       .then(function (data) {
         return res.json(data);
       })
