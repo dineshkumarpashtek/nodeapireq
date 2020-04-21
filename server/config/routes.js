@@ -16,43 +16,6 @@ module.exports = function (app, db, pgp) {
   // =====================================
   // HOME PAGE (with login links) ========
   // =====================================
-
-  const postLimiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 1,
-  });
-
-  app.post(
-    "/api/createlead",
-    [
-      check("name").not().isEmpty().isLength({ min: 3, max: 255 }).trim(),
-      check("company").not().isEmpty().isLength({ min: 3, max: 255 }).trim(),
-    ],
-    postLimiter,
-    (request, response) => {
-      const errors = validationResult(request);
-
-      if (!errors.isEmpty()) {
-        return response.status(422).json({ errors: errors.array() });
-      }
-
-      const { name, company } = request.body;
-
-      pool.query(
-        "INSERT INTO lead (name, company) VALUES ($1, $2)",
-        [name, company],
-        (error) => {
-          if (error) {
-            throw error;
-          }
-          response
-            .status(201)
-            .json({ status: "success", message: "Lead Created." });
-        }
-      );
-    }
-  );
-
   app.get("/", function (req, res) {
     res.render("index.ejs"); // load the index.ejs file
   });
@@ -61,7 +24,7 @@ module.exports = function (app, db, pgp) {
     var sId = req.params.sId;
     console.log("sId+" + sId);
     //WHERE s_id ="+sId+"::int"
-    db.query("SELECT * FROM student where s_id=" + sId + "", true)
+    db.query("SELECT * FROM lead where s_id=" + sId + "", true)
       .then(function (data) {
         console.log("data+" + data);
         var studentDtls = data;
@@ -76,7 +39,7 @@ module.exports = function (app, db, pgp) {
           // Now you can get the access token and instance URL information.
           var records = [];
           conn.query(
-            "SELECT DateTaken__c,ExamResult__c,MinutesTaken__c,Id,Name FROM Student__c WHERE Student_Id__c='" +
+            "SELECT LastName,Company,Id,Name FROM lead WHERE Id='" +
               sId +
               "' LIMIT 1",
             function (err, result) {
@@ -91,13 +54,12 @@ module.exports = function (app, db, pgp) {
 
               if (result.totalSize != 0) {
                 // record updation
-                conn.sobject("Student__c").update(
+                conn.sobject("lead").update(
                   {
                     Id: result.records[0].Id,
                     Name: result.records[0].name,
-                    DateTaken__c: result.records[0].datetaken__c,
-                    ExamResult__c: result.records[0].examresult__c,
-                    MinutesTaken__c: result.records[0].minutestaken__c,
+                    LastName: result.records[0].LastName,
+                    Company: result.records[0].Company,
                   },
                   function (err, ret) {
                     if (err || !ret.success) {
@@ -109,12 +71,11 @@ module.exports = function (app, db, pgp) {
                 );
               } else {
                 // Single record creation
-                conn.sobject("Student__c").create(
+                conn.sobject("lead").create(
                   {
                     Name: studentDtls[0].name,
-                    DateTaken__c: studentDtls[0].datetaken,
-                    ExamResult__c: studentDtls[0].examresult,
-                    MinutesTaken__c: studentDtls[0].minutestaken,
+                    LastName: studentDtls[0].LastName,
+                    Company: studentDtls[0].Company,
                   },
                   function (err, ret) {
                     if (err || !ret.success) {
@@ -128,6 +89,20 @@ module.exports = function (app, db, pgp) {
             }
           );
         });
+
+        /*	
+      For Upsert
+      conn.sobject("Student__c").upsert({ 
+					Name : studentDtls[0].name,     
+					DateTaken__c: studentDtls[0].datetaken,
+					ExamResult__c: studentDtls[0].examresult,
+					MinutesTaken__c: studentDtls[0].minutestaken,
+					Student_Id__c: sId
+				}, 'Student_Id__c', function(err, ret) {
+				  if (err || !ret.success) { return console.error(err, ret); }
+				  console.log('Upserted Successfully');
+				  // ... 
+				}); */
         return res.json(data);
       })
       .catch(function (err) {
@@ -135,7 +110,14 @@ module.exports = function (app, db, pgp) {
         return res.status(500).json({ success: false, error: err });
       })
       .finally(function () {
+        // If we do not close the connection pool when exiting the application,
+        // it may take 30 seconds (poolIdleTimeout) before the process terminates,
+        // waiting for the connection to expire in the pool.
+
+        // But if you normally just kill the process, then it doesn't matter.
         pgp.end(); // for immediate app exit, closing the connection pool.
+        // See also:
+        // https://github.com/vitaly-t/pg-promise#library-de-initialization
       });
   });
 };
