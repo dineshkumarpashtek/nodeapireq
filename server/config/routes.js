@@ -25,9 +25,15 @@ module.exports = function (app, db, pgp) {
     //const { name, company } = req.body;
     //WHERE s_id ="+sId+"::int"
 
-    var insertQuery = "INSERT INTO Users(name, company) VALUES $1";
+    const format = require("pg-format");
 
-    db.query(insertQuery, Inserts("${name}, ${company}", req.body), true)
+    let leads = req.body;
+    let insertQuery = format(
+      "INSERT INTO users (name, company) VALUES %L returning id",
+      leads
+    );
+
+    db.query(insertQuery, true)
       .then(function (data) {
         return res.json(data);
       })
