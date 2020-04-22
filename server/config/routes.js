@@ -16,7 +16,7 @@ module.exports = function (app, db, pgp) {
   // =====================================
   // HOME PAGE (with login links) ========
   // =====================================
-  app.get("/api/getlead", function (req, res) {
+  app.get("/", function (req, res) {
     res.render("index.ejs"); // load the index.ejs file
   });
 
