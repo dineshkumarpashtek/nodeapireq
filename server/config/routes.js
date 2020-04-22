@@ -16,8 +16,18 @@ module.exports = function (app, db, pgp) {
   // =====================================
   // HOME PAGE (with login links) ========
   // =====================================
-  app.get("/", function (req, res) {
-    res.render("index.ejs"); // load the index.ejs file
+  app.get("/api/getlead", function (req, res) {
+    //res.render("index.ejs"); // load the index.ejs file
+  const results = [];
+    var query = "SELECT * FROM lead ";
+    db.query(query, true)
+      .then(function (data) {
+        return res.json(data);
+      })
+      .catch(function (err) {
+        console.log("ERROR:", err); // print the error;
+        return res.status(500).json({ success: false, error: err });
+      })
   });
 
   app.post("/api/createlead", function (req, res) {
