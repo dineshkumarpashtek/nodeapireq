@@ -28,6 +28,9 @@ module.exports = function (app, db, pgp) {
         console.log("ERROR:", err); // print the error;
         return res.status(500).json({ success: false, error: err });
       })
+    .finally(function () {
+        pgp.end(); // for immediate app exit, closing the connection pool.
+      });
   });
 
   app.post("/api/createlead", function (req, res) {
