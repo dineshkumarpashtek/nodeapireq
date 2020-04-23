@@ -55,7 +55,7 @@ module.exports = function (app, db, pgp) {
       });
   });
   
-  app.post("/api/updatelead", function (req, res) {
+  app.put("/api/updatelead", function (req, res) {
    
     var updateQuery =
       "UPDATE lead SET address = 'PashtekUS' WHERE address = 'Pashtek';
