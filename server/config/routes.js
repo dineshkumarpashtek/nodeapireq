@@ -36,7 +36,7 @@ module.exports = function (app, db, pgp) {
   
   app.post("/api/updatelead", function (req, res) {
      var updateQuery =
-      "UPDATE lead SET company = 'PashtekUS' WHERE company = 'Pashtek';
+      "UPDATE lead SET company = 'PashtekUS' WHERE company = 'Pashtek'";
 
     db.query(updateQuery, true)
       .then(function (data) {
