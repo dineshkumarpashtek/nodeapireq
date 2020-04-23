@@ -52,5 +52,28 @@ module.exports = function (app, db, pgp) {
       });
   });
   
+  app.post("/api/createlead", function (req, res) {
+    
+    const { name, company } = req.body;
+    var insertQuery =
+      "INSERT INTO lead (name, company) VALUES ('" +
+      name +
+      "','" +
+      company +
+      "')";
+
+    db.query(insertQuery, true)
+      .then(function (data) {
+        return res.json(data);
+      })
+      .catch(function (err) {
+        console.log("ERROR:", err); // print the error;
+        return res.status(400).json({ success: false, error: err });
+      })
+      .finally(function () {
+        pgp.end(); // for immediate app exit, closing the connection pool.
+      });
+  });
+
   
 };
