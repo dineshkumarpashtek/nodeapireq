@@ -75,7 +75,7 @@ module.exports = function (app, db, pgp) {
       });
   });
 
-app.delete("/api/updatelead", function (req, res) {
+app.delete("/api/deletelead", function (req, res) {
      var deleteQuery =
       "DELETE FROM lead WHERE company = 'PashtekUS'";
 
