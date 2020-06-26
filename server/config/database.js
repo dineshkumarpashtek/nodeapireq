@@ -3,7 +3,7 @@ var pgp = require("./pgpromise.js");
 
 // Database connection details;
 var cn = {
-  host: "ec2-52-44-166-58.compute-1.amazonaws.com", // 'localhost' is the default;
+  host: "ec2-52-72-221-20.compute-1.amazonaws.com", // 'localhost' is the default;
   port: 5432, // 5432 is the default;
   database: "d2sfu0rasq4o8c",
   user: "ffmkxqyvrdntad",
