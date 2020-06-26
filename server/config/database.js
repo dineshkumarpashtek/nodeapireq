@@ -7,7 +7,7 @@ var cn = {
   port: 5432, // 5432 is the default;
   database: "db493dc5mce06b",
   user: "lcafwmiwylhklf",
-  password: "362c46978c8ebe967073fcb79b9df880cba2502f6e814613cd82f805207be995",
+  password: "6bdeab52885ec6bc8a911c11ae42436a919d1e7c0e1b7d91ec383b9860e7770e",
 };
 // You can check for all default values in:
 // https://github.com/brianc/node-postgres/blob/master/lib/defaults.js
