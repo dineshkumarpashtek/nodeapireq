@@ -5,8 +5,8 @@ var pgp = require("./pgpromise.js");
 var cn = {
   host: "ec2-52-44-166-58.compute-1.amazonaws.com", // 'localhost' is the default;
   port: 5432, // 5432 is the default;
-  database: "db493dc5mce06b",
-  user: "lcafwmiwylhklf",
+  database: "d2sfu0rasq4o8c",
+  user: "ffmkxqyvrdntad",
   password: "6bdeab52885ec6bc8a911c11ae42436a919d1e7c0e1b7d91ec383b9860e7770e",
 };
 // You can check for all default values in:
